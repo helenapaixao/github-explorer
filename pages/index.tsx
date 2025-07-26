@@ -1,14 +1,13 @@
 import React, { FormEvent, useEffect, useState } from 'react';
-import Header from '../../components/Header/Header';
-import RepositoryCard from '../../components/RepositoryCard';
-import UserCard from '../../components/UserCard';
+import Header from '../src/components/Header/Header';
+import RepositoryCard from '../src/components/RepositoryCard';
+import UserCard from '../src/components/UserCard';
 
-import searchIcon from '../../assets/search.svg';
+import searchIcon from '../src/assets/search.svg';
+import searchImg from '../src/assets/searchimg.svg';
 
-import searchImg from '../../assets/searchimg.svg';
-
-import {api} from '../../api';
-import * as S from './styles';
+import { api } from '../src/api';
+import * as S from '../src/pages/Explorer/styles';
 
 interface User {
   login: string;
@@ -28,7 +27,7 @@ interface Repository {
   html_url: string;
   owner: {
     avatar_url: string;
-  }
+  };
 }
 
 const Explorer = () => {
@@ -41,7 +40,7 @@ const Explorer = () => {
 
     if (storagedRepositories) {
       return JSON.parse(storagedRepositories);
-    } 
+    }
 
     return [];
   });
@@ -57,52 +56,50 @@ const Explorer = () => {
   });
 
   useEffect(() => {
-    setInputError('')
-  }, [filter])
+    setInputError('');
+  }, [filter]);
 
   useEffect(() => {
-    localStorage.setItem('@github_explorer:repositories',
-    JSON.stringify(repositories));
-  }, [repositories])
+    localStorage.setItem('@github_explorer:repositories', JSON.stringify(repositories));
+  }, [repositories]);
 
   useEffect(() => {
-    localStorage.setItem('@github_explorer:users',
-    JSON.stringify(users))
-  }, [users])
+    localStorage.setItem('@github_explorer:users', JSON.stringify(users));
+  }, [users]);
 
   async function handleSearch(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     if (!newSearch) {
-      setInputError('Favor preencha o campo!')
+      setInputError('Favor preencha o campo!');
       return;
     }
 
-      fetch(`${api}/${filter}/${newSearch}`)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(response.statusText);
-          }
-
-          return response.json();
-        })
-        .then(response => {
-          filter === 'repos' 
+    fetch(`${api}/${filter}/${newSearch}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(response.statusText);
+        }
+        return response.json();
+      })
+      .then(response => {
+        filter === 'repos'
           ? setRepositories([...repositories, response])
           : setUsers([...users, response]);
 
-          setNewSearch('');
-          setInputError('');
-        }).catch(() => setInputError('Houve um erro na sua busca. Tente outro repositório ou usuário.'))
+        setNewSearch('');
+        setInputError('');
+      })
+      .catch(() => setInputError('Houve um erro na sua busca. Tente outro repositório ou usuário.'));
   }
 
   function handleExcludeRepository(id: number) {
-    const newRepositoriesList = repositories.filter((item) => item.id !== id);
+    const newRepositoriesList = repositories.filter(item => item.id !== id);
     setRepositories(newRepositoriesList);
   }
 
   function handleExcludeUser(login: string) {
-    const newUsersList = users.filter((item) => item.login !== login);
+    const newUsersList = users.filter(item => item.login !== login);
     setUsers(newUsersList);
   }
 
@@ -116,43 +113,44 @@ const Explorer = () => {
           <option value="repos">Repositórios</option>
           <option value="users">Usuários</option>
         </select>
-        <input 
-          type="text" 
+        <input
+          type="text"
           placeholder="Digite aqui"
-          value={newSearch} 
+          value={newSearch}
           onChange={e => setNewSearch(e.target.value)}
         />
         <button type="submit">
-          <img src={searchIcon} alt="Pesquisar"/>
+          <img src={searchIcon} alt="Pesquisar" />
         </button>
 
-      <S.InputError>{inputError}</S.InputError>
-      </S.Form>   
+        <S.InputError>{inputError}</S.InputError>
+      </S.Form>
 
       <S.MainContent>
-        { !repositories.length && !users.length && 
-          <S.Search src={searchImg} alt="Nenhum recente"/> }
+        {!repositories.length && !users.length && <S.Search src={searchImg} alt="Nenhum recente" />}
 
-        {
-          filter === 'repos' && repositories.map(repo => (
-            <RepositoryCard
-              key={repo.id}
-              id={repo.id}
-              html_url={repo.html_url}
-              full_name={repo.full_name}
-              description={repo.description}
-              stargazers_count={repo.stargazers_count}
-              forks_count={repo.forks_count}
-              language={repo.language}
-              owner={repo.owner}
-              handleExcludeRepository={handleExcludeRepository}
-            />
-          )).reverse()
-        }
+        {filter === 'repos' &&
+          repositories
+            .map(repo => (
+              <RepositoryCard
+                key={repo.id}
+                id={repo.id}
+                html_url={repo.html_url}
+                full_name={repo.full_name}
+                description={repo.description}
+                stargazers_count={repo.stargazers_count}
+                forks_count={repo.forks_count}
+                language={repo.language}
+                owner={repo.owner}
+                handleExcludeRepository={handleExcludeRepository}
+              />
+            ))
+            .reverse()}
 
-          {
-            filter === 'users' && users.map(user => (
-              <UserCard 
+        {filter === 'users' &&
+          users
+            .map(user => (
+              <UserCard
                 key={user.login}
                 login={user.login}
                 avatar_url={user.avatar_url}
@@ -160,11 +158,11 @@ const Explorer = () => {
                 bio={user.bio}
                 handleExcludeUser={handleExcludeUser}
               />
-            )).reverse()
-          }
+            ))
+            .reverse()}
       </S.MainContent>
     </S.Container>
   );
-}
+};
 
 export default Explorer;
