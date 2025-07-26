@@ -33,6 +33,7 @@ This project was developed with the following technologies:
 - React
 - Typescript
 - styled-components
+- Next.js
 - Fetch API
 
 

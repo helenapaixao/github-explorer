@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 import codeIcon from '../../assets/code.svg';
 import * as S from './styles';
+import Link from 'next/link';
 
 interface RepoProps {
   name: string;
