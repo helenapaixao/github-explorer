@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Link} from 'react-router-dom';
+import Link from 'next/link';
 import logoImg from '../../assets/logo.svg';
 import arrowLeftIcon from '../../assets/arrow-left.svg';
 
@@ -18,7 +18,7 @@ const Header = ({children, haveButtonBack}: Props) => {
       <S.NavContent>
         <img src={logoImg} alt="github explorer"/>
         {haveButtonBack ? (
-          <Link to={haveButtonBack}>
+          <Link href={haveButtonBack}>
             <img src={arrowLeftIcon} alt="Voltar"/>Voltar
           </Link>
         ) : (

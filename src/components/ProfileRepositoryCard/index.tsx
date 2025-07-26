@@ -7,7 +7,7 @@ import issueIcon from '../../assets/info.svg';
 import { formatNumbers } from '../../utils/formatNumbers';
 
 import * as S from './styles';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 interface ProfileRepositoryProps {
   full_name: string;
@@ -33,7 +33,7 @@ const ProfileRepositoryCard = ({
   return (
     <S.Container>
       <header>
-        <Link to={`/profile/${owner.login}`}>
+        <Link href={`/profile/${owner.login}`}>
           <img src={owner.avatar_url} alt={full_name}/>
         </Link>
         <h2>{full_name}</h2>

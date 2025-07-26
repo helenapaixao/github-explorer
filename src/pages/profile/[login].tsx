@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import Header from '../../components/Header/Header';
 import RepoBasic from '../../components/RepoBasic/RepoBasic';
 import ProfileUserCard from '../../components/ProfileUserCard';
-import { useRouteMatch } from 'react-router-dom';
-
-import {api} from '../../api';
-
-import * as S from './styles';
+import { api } from '../../api';
+import * as S from '../Profile/styles';
 
 interface User {
   login: string;
@@ -25,37 +23,35 @@ interface Repos {
   full_name: string;
 }
 
-interface ProfileParams {
-  login: string;
-}
-
 const Profile = () => {
   const [user, setUser] = useState<User | null>(null);
-  const [repos, setRepos] = useState<Repos[]>([])
+  const [repos, setRepos] = useState<Repos[]>([]);
 
-  const {params} = useRouteMatch<ProfileParams>();
+  const router = useRouter();
+  const { login } = router.query as { login?: string };
 
   useEffect(() => {
+    if (!login) return;
     async function loadProfileData(): Promise<void> {
-      fetch(`${api}/users/${params.login}`)
+      fetch(`${api}/users/${login}`)
         .then(response => response.json())
         .then(response => setUser(response));
 
-      fetch(`${api}/users/${params.login}/repos`)
+      fetch(`${api}/users/${login}/repos`)
         .then(response => response.json())
         .then(response => setRepos(response));
     }
 
     loadProfileData();
 
-  }, [params.login])
+  }, [login]);
 
   return (
     <S.Container>
-      <Header haveButtonBack="/"/>
+      <Header haveButtonBack="/" />
       <S.Content>
-        { user && 
-            <ProfileUserCard 
+        { user &&
+            <ProfileUserCard
               avatar_url={user.avatar_url}
               bio={user.bio}
               followers={user.followers}
@@ -67,10 +63,10 @@ const Profile = () => {
         }
         <S.RepositoriesList>
           <strong>Repositórios</strong>
-          
-          { 
+
+          {
             repos.length ? repos.map(item => (
-              <RepoBasic 
+              <RepoBasic
                 key={item.name}
                 description={item.description}
                 language={item.language}
@@ -78,13 +74,11 @@ const Profile = () => {
                 full_name={item.full_name}
               />
             )) : <strong>Nenhum repositório a ser listado</strong>
-
           }
         </S.RepositoriesList>
       </S.Content>
-
     </S.Container>
   );
-}
+};
 
 export default Profile;

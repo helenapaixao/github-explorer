@@ -29,10 +29,10 @@ Github explorer é uma aplicação desenvolvida com reactjs consumindo a API do 
 # :rocket: Technologies
 This project was developed with the following technologies:
 
-- ReactJS
+- Next.js
+- React
 - Typescript
 - styled-components
-- react-router-dom
 - Fetch API
 
 

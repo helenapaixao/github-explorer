@@ -4,7 +4,7 @@ import xIcon from '../../assets/x-circle.svg';
 import arrowIcon from '../../assets/arrow-right.svg';
 
 import * as S from './styles';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 interface UserCardProps {
   login: string;
@@ -21,7 +21,7 @@ const UserCard = ({login, avatar_url, name, bio, handleExcludeUser}: UserCardPro
         <img src={avatar_url} alt="Avatar"/>
         <S.CardInfos>
           <S.Username>
-            <Link to={`/profile/${login}`}>{name}</Link>
+            <Link href={`/profile/${login}`}>{name}</Link>
             <span>{login}</span>
           </S.Username>
           <p>{bio}</p>
