@@ -32,7 +32,7 @@ This project was developed with the following technologies:
 - ReactJS
 - Typescript
 - styled-components
-- react-router-dom
+- Next.js
 - Fetch API
 
 

@@ -2,6 +2,7 @@ import React from 'react';
 
 import codeIcon from '../../assets/code.svg';
 import * as S from './styles';
+import Link from 'next/link';
 
 interface RepoProps {
   name: string;
@@ -17,14 +18,16 @@ const RepoBasic = ({
   full_name,
 }: RepoProps) => {
   return (
-    <S.Container to={`/repository/${full_name}`}>
-      <S.RepoName>{name}</S.RepoName>
-      <S.RepoDescription>{description}</S.RepoDescription> 
-      <S.RepoLanguage>
-        <img src={codeIcon} alt="Linguagem"/>
-        {language}
-      </S.RepoLanguage>
-    </S.Container>
+    <Link href={`/repository/${full_name}`} passHref>
+      <S.Container>
+        <S.RepoName>{name}</S.RepoName>
+        <S.RepoDescription>{description}</S.RepoDescription>
+        <S.RepoLanguage>
+          <img src={codeIcon} alt="Linguagem" />
+          {language}
+        </S.RepoLanguage>
+      </S.Container>
+    </Link>
   );
 }
 

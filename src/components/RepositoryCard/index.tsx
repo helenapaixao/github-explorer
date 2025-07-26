@@ -8,7 +8,7 @@ import {api} from '../../api';
 import  {formatNumbers} from '../../utils/formatNumbers';
 
 import * as S from './styles';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 interface RepositoryCardProps {
   id: number;
@@ -60,7 +60,9 @@ const RepositoryCard = ({
       <S.Card>
         <img src={owner.avatar_url} alt="Avatar"/>
         <S.CardInfos>
-          <Link to={`repository/${full_name}`}>{full_name}</Link>
+          <Link href={`repository/${full_name}`} passHref>
+            <a>{full_name}</a>
+          </Link>
           <p>{description}</p>
           <S.CardFooter>
             <S.Stars>
