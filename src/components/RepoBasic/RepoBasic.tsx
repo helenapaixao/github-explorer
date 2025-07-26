@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 import codeIcon from '../../assets/code.svg';
 import * as S from './styles';
@@ -23,7 +24,7 @@ const RepoBasic = ({
         <S.RepoName>{name}</S.RepoName>
         <S.RepoDescription>{description}</S.RepoDescription>
         <S.RepoLanguage>
-          <img src={codeIcon} alt="Linguagem" />
+          <img src={codeIcon} alt="Linguagem"/>
           {language}
         </S.RepoLanguage>
       </S.Container>

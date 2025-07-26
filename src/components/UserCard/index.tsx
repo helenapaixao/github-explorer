@@ -21,9 +21,7 @@ const UserCard = ({login, avatar_url, name, bio, handleExcludeUser}: UserCardPro
         <img src={avatar_url} alt="Avatar"/>
         <S.CardInfos>
           <S.Username>
-            <Link href={`/profile/${login}`} passHref>
-              <a>{name}</a>
-            </Link>
+            <Link href={`/profile/${login}`}>{name}</Link>
             <span>{login}</span>
           </S.Username>
           <p>{bio}</p>

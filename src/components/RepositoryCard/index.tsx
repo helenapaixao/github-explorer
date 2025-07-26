@@ -60,9 +60,7 @@ const RepositoryCard = ({
       <S.Card>
         <img src={owner.avatar_url} alt="Avatar"/>
         <S.CardInfos>
-          <Link href={`repository/${full_name}`} passHref>
-            <a>{full_name}</a>
-          </Link>
+          <Link href={`/repository/${full_name}`}>{full_name}</Link>
           <p>{description}</p>
           <S.CardFooter>
             <S.Stars>

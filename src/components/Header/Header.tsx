@@ -18,10 +18,8 @@ const Header = ({children, haveButtonBack}: Props) => {
       <S.NavContent>
         <img src={logoImg} alt="github explorer"/>
         {haveButtonBack ? (
-          <Link href={haveButtonBack} passHref>
-            <a>
-              <img src={arrowLeftIcon} alt="Voltar" />Voltar
-            </a>
+          <Link href={haveButtonBack}>
+            <img src={arrowLeftIcon} alt="Voltar"/>Voltar
           </Link>
         ) : (
           <div />

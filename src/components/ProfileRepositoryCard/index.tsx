@@ -33,10 +33,8 @@ const ProfileRepositoryCard = ({
   return (
     <S.Container>
       <header>
-        <Link href={`/profile/${owner.login}`} passHref>
-          <a>
-            <img src={owner.avatar_url} alt={full_name} />
-          </a>
+        <Link href={`/profile/${owner.login}`}>
+          <img src={owner.avatar_url} alt={full_name}/>
         </Link>
         <h2>{full_name}</h2>
         <span>{description}</span>
